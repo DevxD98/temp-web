@@ -1,0 +1,7 @@
+GRANT SELECT, INSERT ON employees TO user1;
+
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
+
+REVOKE INSERT ON employees FROM user1;
+
+REVOKE ALL PRIVILEGES ON *.* FROM 'username'@'localhost';

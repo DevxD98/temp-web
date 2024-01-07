@@ -1,0 +1,14 @@
+Assuming we have a table named students with columns like student_id, first_name, last_name, age, and grade, here's an example of using predicates in a SELECT query:
+
+-- Example 1: Equality Predicate
+SELECT * FROM students WHERE grade = 'A';
+
+-- Example 2: Range Predicate (Greater Than)
+SELECT * FROM students WHERE age > 20;
+
+-- Example 3: LIKE Predicate (Pattern Matching)
+SELECT * FROM students WHERE last_name LIKE 'Smith%';
+
+-- Example 4: IS NULL Predicate
+SELECT * FROM students WHERE grade IS NULL;
+

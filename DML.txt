@@ -1,0 +1,13 @@
+SELECT first_name, last_name, birth_date
+FROM students
+WHERE major = 'Computer Science';
+
+INSERT INTO students (first_name, last_name, birth_date, enrollment_date, major)
+VALUES ('John', 'Doe', '1995-05-15', '2018-09-01', 'Physics');
+
+UPDATE students
+SET major = 'Mathematics'
+WHERE student_id = 101;
+
+DELETE FROM students
+WHERE student_id = 102;

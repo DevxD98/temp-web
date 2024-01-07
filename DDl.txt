@@ -1,0 +1,13 @@
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    birth_date DATE,
+    hire_date DATE
+);
+
+2nd step
+ALTER TABLE employees
+ADD COLUMN email VARCHAR(100);
+
+DROP TABLE employees;
