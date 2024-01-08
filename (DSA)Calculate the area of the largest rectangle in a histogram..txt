@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent a stack
+struct Stack {
+    int top;
+    unsigned capacity;
+    int* array;
+};
+
+// Function to create a stack of given capacity
+struct Stack* createStack(unsigned capacity) {
+    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+    stack->top = -1;
+    stack->capacity = capacity;
+    stack->array = (int*)malloc(stack->capacity * sizeof(int));
+    return stack;
+}
+
+// Function to check if a stack is empty
+int isEmpty(struct Stack* stack) {
+    return stack->top == -1;
+}
+
+// Function to push an index onto the stack
+void push(struct Stack* stack, int item) {
+    stack->array[++stack->top] = item;
+}
+
+// Function to pop an index from the stack
+int pop(struct Stack* stack) {
+    if (!isEmpty(stack)) {
+        return stack->array[stack->top--];
+    }
+    return -1; // Return -1 if the stack is empty
+}
+
+// Function to calculate the area of the largest rectangle in a histogram
+int largestRectangleArea(int heights[], int n) {
+    struct Stack* stack = createStack(n);
+    int maxArea = 0;
+
+    for (int i = 0; i < n; i++) {
+        while (!isEmpty(stack) && heights[i] < heights[stack->array[stack->top]]) {
+            int height = heights[pop(stack)];
+            int width = isEmpty(stack) ? i : i - stack->array[stack->top] - 1;
+            maxArea = (maxArea > height * width) ? maxArea : height * width;
+        }
+        push(stack, i);
+    }
+
+    while (!isEmpty(stack)) {
+        int height = heights[pop(stack)];
+        int width = isEmpty(stack) ? n : n - stack->array[stack->top] - 1;
+        maxArea = (maxArea > height * width) ? maxArea : height * width;
+    }
+
+    free(stack->array);
+    free(stack);
+
+    return maxArea;
+}
+
+int main() {
+    int heights[] = {2, 1, 5, 6, 2, 3};
+    int n = sizeof(heights) / sizeof(heights[0]);
+
+    printf("Histogram Heights:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", heights[i]);
+    }
+    printf("\n");
+
+    int area = largestRectangleArea(heights, n);
+
+    printf("Area of the Largest Rectangle in the Histogram: %d\n", area);
+
+    return 0;
+}
