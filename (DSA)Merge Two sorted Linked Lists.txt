@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition for a singly-linked list node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to insert a new node at the end of a linked list
+struct Node* insertNode(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        return newNode;
+    }
+
+    struct Node* temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+    return head;
+}
+
+// Function to merge two sorted linked lists
+struct Node* mergeSortedLists(struct Node* list1, struct Node* list2) {
+    // Create a dummy node to simplify the code
+    struct Node dummy;
+    struct Node* tail = &dummy;
+    dummy.next = NULL;
+
+    while (1) {
+        if (list1 == NULL) {
+            tail->next = list2;
+            break;
+        }
+
+        if (list2 == NULL) {
+            tail->next = list1;
+            break;
+        }
+
+        if (list1->data <= list2->data) {
+            tail->next = list1;
+            list1 = list1->next;
+        } else {
+            tail->next = list2;
+            list2 = list2->next;
+        }
+
+        tail = tail->next;
+    }
+
+    return dummy.next;
+}
+
+// Function to print a linked list
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* list1 = NULL;
+    struct Node* list2 = NULL;
+
+    // Inserting elements into the first sorted linked list
+    list1 = insertNode(list1, 2);
+    list1 = insertNode(list1, 5);
+    list1 = insertNode(list1, 7);
+
+    // Inserting elements into the second sorted linked list
+    list2 = insertNode(list2, 3);
+    list2 = insertNode(list2, 4);
+    list2 = insertNode(list2, 6);
+
+    printf("Sorted Linked List 1: ");
+    printList(list1);
+
+    printf("Sorted Linked List 2: ");
+    printList(list2);
+
+    struct Node* mergedList = mergeSortedLists(list1, list2);
+
+    printf("Merged Sorted Linked List: ");
+    printList(mergedList);
+
+    return 0;
+}
